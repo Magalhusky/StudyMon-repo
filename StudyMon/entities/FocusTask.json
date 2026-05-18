@@ -1,0 +1,39 @@
+{
+  "name": "FocusTask",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Task title"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "study",
+        "work",
+        "exercise",
+        "reading",
+        "meditation",
+        "creative",
+        "other"
+      ],
+      "default": "work"
+    },
+    "default_duration": {
+      "type": "number",
+      "default": 25,
+      "description": "Default focus duration in minutes"
+    },
+    "times_completed": {
+      "type": "number",
+      "default": 0
+    },
+    "total_minutes": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

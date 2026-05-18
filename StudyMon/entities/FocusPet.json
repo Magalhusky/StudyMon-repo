@@ -1,0 +1,83 @@
+{
+  "name": "FocusPet",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Pet name chosen by user"
+    },
+    "element": {
+      "type": "string",
+      "enum": [
+        "fire",
+        "water",
+        "shadow",
+        "nature",
+        "electric"
+      ],
+      "description": "Pet element type"
+    },
+    "level": {
+      "type": "number",
+      "default": 1,
+      "description": "Current pet level"
+    },
+    "xp": {
+      "type": "number",
+      "default": 0,
+      "description": "Current XP points"
+    },
+    "xp_to_next_level": {
+      "type": "number",
+      "default": 100,
+      "description": "XP needed for next level"
+    },
+    "energy": {
+      "type": "number",
+      "default": 100,
+      "description": "Pet energy (0-100)"
+    },
+    "evolution_stage": {
+      "type": "number",
+      "default": 1,
+      "description": "Evolution stage (1=baby, 2=teen, 3=adult, 4=legendary)"
+    },
+    "total_focus_minutes": {
+      "type": "number",
+      "default": 0,
+      "description": "Total minutes focused"
+    },
+    "gold": {
+      "type": "number",
+      "default": 0,
+      "description": "Gold currency"
+    },
+    "streak_days": {
+      "type": "number",
+      "default": 0,
+      "description": "Consecutive days of focus"
+    },
+    "last_focus_date": {
+      "type": "string",
+      "description": "Last date user completed a focus session"
+    },
+    "battles_won": {
+      "type": "number",
+      "default": 0
+    },
+    "power": {
+      "type": "number",
+      "default": 10,
+      "description": "Pet battle power"
+    },
+    "skin": {
+      "type": "string",
+      "default": "default",
+      "description": "Current pet skin"
+    }
+  },
+  "required": [
+    "name",
+    "element"
+  ]
+}

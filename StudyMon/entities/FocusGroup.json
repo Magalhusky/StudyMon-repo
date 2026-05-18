@@ -1,0 +1,33 @@
+{
+  "name": "FocusGroup",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Group name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Group description"
+    },
+    "invite_code": {
+      "type": "string",
+      "description": "Unique code to join the group"
+    },
+    "member_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of pet IDs that are members"
+    },
+    "owner_email": {
+      "type": "string",
+      "description": "Email of the group creator"
+    }
+  },
+  "required": [
+    "name",
+    "invite_code"
+  ]
+}

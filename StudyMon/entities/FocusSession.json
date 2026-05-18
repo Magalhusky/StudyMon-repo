@@ -1,0 +1,43 @@
+{
+  "name": "FocusSession",
+  "type": "object",
+  "properties": {
+    "task_name": {
+      "type": "string",
+      "description": "Name of the task being focused on"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Planned duration in minutes"
+    },
+    "actual_minutes": {
+      "type": "number",
+      "default": 0,
+      "description": "Actual minutes focused"
+    },
+    "xp_earned": {
+      "type": "number",
+      "default": 0
+    },
+    "gold_earned": {
+      "type": "number",
+      "default": 0
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "failed": {
+      "type": "boolean",
+      "default": false
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "task_name",
+    "duration_minutes"
+  ]
+}
