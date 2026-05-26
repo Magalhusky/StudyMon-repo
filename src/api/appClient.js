@@ -110,7 +110,7 @@ const setCurrentUser = (user) => {
   window.localStorage.setItem(STORAGE_KEYS.user, JSON.stringify(user));
 };
 
-export const base44 = {
+export const appClient = {
   auth: {
     me: async () => getCurrentUser(),
     logout: (redirectUrl) => {

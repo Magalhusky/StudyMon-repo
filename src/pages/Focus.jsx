@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import FocusTimerDisplay from '@/components/focus/FocusTimerDisplay';
 import PetDisplay from '@/components/pet/PetDisplay';
@@ -42,14 +42,14 @@ export default function Focus() {
 
   const { data: pets } = useQuery({
     queryKey: ['my-pet'],
-    queryFn: () => base44.entities.FocusPet.list(),
+    queryFn: () => appClient.entities.FocusPet.list(),
     initialData: [],
   });
   const pet = pets[0];
 
   const { data: tasks } = useQuery({
     queryKey: ['tasks'],
-    queryFn: () => base44.entities.FocusTask.list(),
+    queryFn: () => appClient.entities.FocusTask.list(),
     initialData: [],
   });
 
@@ -69,7 +69,7 @@ export default function Focus() {
     clearInterval(intervalRef.current);
 
     // Save session
-    await base44.entities.FocusSession.create({
+    await appClient.entities.FocusSession.create({
       task_name: taskName || 'Sessão de Foco',
       duration_minutes: duration,
       actual_minutes: completed ? duration : actualMinutes,
@@ -105,7 +105,7 @@ export default function Focus() {
       newStreak = 1;
     }
 
-    await base44.entities.FocusPet.update(pet.id, {
+    await appClient.entities.FocusPet.update(pet.id, {
       xp: remainingXP,
       xp_to_next_level: nextLevelXP,
       level: newLevel,

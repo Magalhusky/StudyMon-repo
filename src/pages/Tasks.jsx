@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,12 +20,12 @@ export default function Tasks() {
 
   const { data: tasks, isLoading } = useQuery({
     queryKey: ['tasks'],
-    queryFn: () => base44.entities.FocusTask.list('-created_date'),
+    queryFn: () => appClient.entities.FocusTask.list('-created_date'),
     initialData: [],
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.FocusTask.create(data),
+    mutationFn: (data) => appClient.entities.FocusTask.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
       setTitle('');
@@ -36,7 +36,7 @@ export default function Tasks() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.FocusTask.delete(id),
+    mutationFn: (id) => appClient.entities.FocusTask.delete(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['tasks'] }),
   });
 

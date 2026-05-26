@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -53,11 +53,11 @@ export default function Battle() {
   const [waiting, setWaiting] = useState(false);
   const queryClient = useQueryClient();
 
-  const { data: pets } = useQuery({ queryKey: ['my-pet'], queryFn: () => base44.entities.FocusPet.list(), initialData: [] });
+  const { data: pets } = useQuery({ queryKey: ['my-pet'], queryFn: () => appClient.entities.FocusPet.list(), initialData: [] });
   const pet = pets[0];
   const mySkills = pet ? getSkillsForElement(pet.element) : [];
 
-  const { data: allPets } = useQuery({ queryKey: ['all-pets'], queryFn: () => base44.entities.FocusPet.list('-level', 50), initialData: [] });
+  const { data: allPets } = useQuery({ queryKey: ['all-pets'], queryFn: () => appClient.entities.FocusPet.list('-level', 50), initialData: [] });
   const pvpOpponents = allPets.filter(p => p.id !== pet?.id);
 
   // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -204,7 +204,7 @@ export default function Battle() {
     if (won && pet) {
       const xpReward = isBot ? (opponent?.reward_xp || 30) : 30;
       const goldReward = isBot ? (opponent?.reward_gold || 20) : 20;
-      await base44.entities.FocusPet.update(pet.id, {
+      await appClient.entities.FocusPet.update(pet.id, {
         battles_won: (pet.battles_won || 0) + 1,
         gold: (pet.gold || 0) + goldReward,
         xp: (pet.xp || 0) + xpReward,

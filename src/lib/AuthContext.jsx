@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 
 const AuthContext = createContext();
 
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   const checkUserAuth = async () => {
     try {
       setIsLoadingAuth(true);
-      const currentUser = await base44.auth.me();
+      const currentUser = await appClient.auth.me();
       setUser(currentUser);
       setIsAuthenticated(true);
     } catch (error) {
@@ -53,14 +53,14 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setIsAuthenticated(false);
     if (shouldRedirect) {
-      base44.auth.logout(window.location.href);
+      appClient.auth.logout(window.location.href);
     } else {
-      base44.auth.logout();
+      appClient.auth.logout();
     }
   };
 
   const navigateToLogin = () => {
-    base44.auth.redirectToLogin(window.location.href);
+    appClient.auth.redirectToLogin(window.location.href);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,20 +20,20 @@ export default function Ranking() {
 
   const { data: myPets } = useQuery({
     queryKey: ['my-pet'],
-    queryFn: () => base44.entities.FocusPet.list(),
+    queryFn: () => appClient.entities.FocusPet.list(),
     initialData: [],
   });
   const myPet = myPets[0];
 
   const { data: allGroups, isLoading } = useQuery({
     queryKey: ['all-groups'],
-    queryFn: () => base44.entities.FocusGroup.list('-created_date', 100),
+    queryFn: () => appClient.entities.FocusGroup.list('-created_date', 100),
     initialData: [],
   });
 
   const { data: allPets } = useQuery({
     queryKey: ['all-pets-for-groups'],
-    queryFn: () => base44.entities.FocusPet.list('-level', 200),
+    queryFn: () => appClient.entities.FocusPet.list('-level', 200),
     initialData: [],
   });
 
@@ -54,7 +54,7 @@ export default function Ranking() {
     : [];
 
   const handleCreateGroup = async (data) => {
-    const group = await base44.entities.FocusGroup.create({
+    const group = await appClient.entities.FocusGroup.create({
       ...data,
       owner_email: user?.email,
       member_ids: myPet ? [myPet.id] : [],
@@ -71,7 +71,7 @@ export default function Ranking() {
     const currentMembers = group.member_ids || [];
     if (currentMembers.includes(myPet.id)) return { error: 'Você já é membro deste grupo!' };
 
-    await base44.entities.FocusGroup.update(group.id, {
+    await appClient.entities.FocusGroup.update(group.id, {
       member_ids: [...currentMembers, myPet.id],
     });
     queryClient.invalidateQueries({ queryKey: ['all-groups'] });
@@ -82,10 +82,10 @@ export default function Ranking() {
   const handleLeaveGroup = async (group) => {
     if (group.owner_email === user?.email) {
       // Owner deletes the group
-      await base44.entities.FocusGroup.delete(group.id);
+      await appClient.entities.FocusGroup.delete(group.id);
     } else {
       // Member leaves
-      await base44.entities.FocusGroup.update(group.id, {
+      await appClient.entities.FocusGroup.update(group.id, {
         member_ids: (group.member_ids || []).filter(id => id !== myPet?.id),
       });
     }

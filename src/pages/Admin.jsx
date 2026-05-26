@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,13 +22,13 @@ export default function Admin() {
 
   const { data: allPets, isLoading } = useQuery({
     queryKey: ['admin-all-pets'],
-    queryFn: () => base44.entities.FocusPet.list('-level', 100),
+    queryFn: () => appClient.entities.FocusPet.list('-level', 100),
     initialData: [],
   });
 
   const { data: allSessions } = useQuery({
     queryKey: ['admin-sessions'],
-    queryFn: () => base44.entities.FocusSession.list('-created_date', 20),
+    queryFn: () => appClient.entities.FocusSession.list('-created_date', 20),
     initialData: [],
   });
 
@@ -61,7 +61,7 @@ export default function Admin() {
       payload.evolution_stage = getEvolutionStage(payload.level);
       payload.power = getPower(payload.level, payload.total_focus_minutes ?? pet.total_focus_minutes ?? 0, payload.battles_won ?? pet.battles_won ?? 0);
     }
-    await base44.entities.FocusPet.update(pet.id, payload);
+    await appClient.entities.FocusPet.update(pet.id, payload);
     setEdits(prev => { const next = { ...prev }; delete next[pet.id]; return next; });
     queryClient.invalidateQueries({ queryKey: ['admin-all-pets'] });
     queryClient.invalidateQueries({ queryKey: ['my-pet'] });

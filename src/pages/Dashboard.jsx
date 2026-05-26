@@ -1,5 +1,5 @@
 import React from 'react';
-import { base44 } from '@/api/base44Client';
+import { appClient } from '@/api/appClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import PetDisplay from '@/components/pet/PetDisplay';
@@ -17,13 +17,13 @@ export default function Dashboard() {
 
   const { data: pets, isLoading } = useQuery({
     queryKey: ['my-pet'],
-    queryFn: () => base44.entities.FocusPet.list(),
+    queryFn: () => appClient.entities.FocusPet.list(),
     initialData: [],
   });
 
   const { data: sessions } = useQuery({
     queryKey: ['recent-sessions'],
-    queryFn: () => base44.entities.FocusSession.list('-created_date', 5),
+    queryFn: () => appClient.entities.FocusSession.list('-created_date', 5),
     initialData: [],
   });
 
@@ -31,7 +31,7 @@ export default function Dashboard() {
   const needsPet = !isLoading && !pet;
 
   const handleCreatePet = async (data) => {
-    await base44.entities.FocusPet.create({
+    await appClient.entities.FocusPet.create({
       ...data,
       level: 1,
       xp: 0,
